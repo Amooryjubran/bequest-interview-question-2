@@ -19,6 +19,12 @@ app.post("/", (req, res) => {
   res.sendStatus(200);
 });
 
+// Endpoint to simulate tampering
+app.post("/tamper", (req, res) => {
+  database.data = "Tampered Data";
+  res.sendStatus(200);
+});
+
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });

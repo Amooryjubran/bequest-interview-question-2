@@ -1,36 +1,15 @@
-import React, { useEffect, useState } from "react";
-
-const API_URL = "http://localhost:8080";
+import { useData } from "hooks/useData";
 
 function App() {
-  const [data, setData] = useState<string>();
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    const response = await fetch(API_URL);
-    const { data } = await response.json();
-    setData(data);
-  };
-
-  const updateData = async () => {
-    await fetch(API_URL, {
-      method: "POST",
-      body: JSON.stringify({ data }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-
-    await getData();
-  };
-
-  const verifyData = async () => {
-    throw new Error("Not implemented");
-  };
+  const {
+    data,
+    setData,
+    message,
+    updateData,
+    verifyData,
+    recoverData,
+    tamperData,
+  } = useData();
 
   return (
     <div
@@ -62,7 +41,14 @@ function App() {
         <button style={{ fontSize: "20px" }} onClick={verifyData}>
           Verify Data
         </button>
+        <button style={{ fontSize: "20px" }} onClick={recoverData}>
+          Recover Data
+        </button>
+        <button style={{ fontSize: "20px" }} onClick={tamperData}>
+          Tamper Data
+        </button>
       </div>
+      {message && <div style={{ fontSize: "20px" }}>{message}</div>}
     </div>
   );
 }
